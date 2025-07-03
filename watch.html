@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .stopwatch {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px gray;
+    }
+
+    #display {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .start { background-color:lightgreen; color:black; }
+    .pause { background-color: yellow; color:black; }
+    .reset { background-color: red; color: black; }
+  </style>
+</head>
+<body>
+
+  <div class="stopwatch">
+    <div id="display">00:00</div>
+    <button class="start" onclick="start()">Start</button>
+    <button class="pause" onclick="pause()">Pause</button>
+    <button class="reset" onclick="reset()">Stop</button>
+  </div>
+
+  <script>
+    let seconds = 0;
+    let minutes = 0;
+    let timer = null;
+
+    function updateDisplay() {
+      let min = minutes < 10 ? "0" + minutes : minutes;
+      let sec = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("display").innerText = min + ":" + sec;
+    }
+
+    function start() {
+      if (timer !== null) return; // Already running
+      timer = setInterval(() => {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+        updateDisplay();
+      }, 1000);
+    }
+
+    function pause() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function reset() {
+      clearInterval(timer);
+      timer = null;
+      seconds = 0;
+      minutes = 0;
+      updateDisplay();
+    }
+  </script>
+
+</body>
+</html>
